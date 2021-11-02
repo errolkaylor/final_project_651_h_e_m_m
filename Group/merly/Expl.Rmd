@@ -1,0 +1,86 @@
+---
+title: "Expulsion"
+author: "Merly Klaas"
+date: "10/29/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rio)
+library(ggplot2)
+library(readr)
+library(here)
+library(janitor)
+library(skimr)
+library(dplyr)
+```
+
+Importing the data set
+
+```{r}
+expl <- read.csv(here("data", "Expulsions.csv")) %>% 
+  clean_names() %>%  
+  as_tibble()
+```
+
+Dataset with no negative values across all variables. 
+
+```{r}
+expl1 <- expl
+expl1[expl1 < 0] <- NA
+
+expl1 <- expl1 %>% 
+  drop_na()
+expl1
+
+```
+
+## Explusion of preschool children, by race/ethnicity and gender, disability status
+
+
+```{r}
+preschool_expl <- expl %>% 
+  select(1:24)
+preschool_expl[preschool_expl < 0] <- NA
+
+preschool_expl <- preschool_expl %>% 
+  drop_na()
+preschool_expl
+```
+
+## Expulsion of students with educational services, by race/ethnicity, gender, disability status
+
+```{r}
+w_edu_expl <- expl %>% 
+  select (1:8, 29:48, 85:103)
+w_edu_expl[w_edu_expl <0] <- NA
+
+w_edu_expl <- w_edu_expl %>% 
+  drop_na()
+colnames(w_edu_expl)
+```
+
+## Expulsion of students without educational services, by race/etchnicity, gender, disability status
+
+```{r}
+wo_edu_expl <- expl %>% 
+  select (1:8, 49:64, 104:122)
+wo_edu_expl[wo_edu_expl <0] <- NA
+wo_edu_expl <- wo_edu_expl %>% 
+  drop_na()
+colnames(wo_edu_expl)
+```
+
+## Expulsion of students under zero tolerance policy
+
+```{r}
+zero_pol_expl <- expl %>% 
+  select(1:8, 65:84, 123:142)
+zero_pol_expl[zero_pol_expl <0] <- NA
+zero_pol_expl <- zero_pol_expl %>% 
+  drop_na()
+colnames(zero_pol_expl)
+
+```

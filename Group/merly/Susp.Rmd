@@ -1,0 +1,106 @@
+---
+title: "Suspension"
+author: "Merly Klaas"
+date: "11/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rio)
+library(ggplot2)
+library(readr)
+library(here)
+library(janitor)
+library(skimr)
+library(dplyr)
+```
+
+## Importing dataset
+
+```{r}
+susp <- read.csv(here("data", "Suspensions.csv")) %>% 
+  clean_names() %>%  
+  as_tibble()
+
+```
+
+Dataset with no negative values across all variables. 
+
+```{r}
+susp1 <- susp
+susp1[susp1 < 0] <- NA
+
+susp1 <- susp1 %>% 
+  drop_na()
+```
+
+## Preschool students suspension by race/ethnicity, gender, disability status
+* Only one out-of-school suspension
+```{r}
+preschool_susp <- susp %>% 
+  select (1:8, 10:28, 49:50 )
+preschool_susp[preschool_susp < 0] <- NA
+
+preschool_susp <- preschool_susp %>% 
+  drop_na()
+preschool_susp
+```
+* more than one out-of-school suspensions
+```{r}
+preschool_more_susp <- 
+  preschool_more_susp <- susp %>% 
+  select (1:8, 29:50 )
+preschool_more_susp[preschool_more_susp < 0] <- NA
+
+preschool_more_susp <- preschool_more_susp %>% 
+  drop_na()
+preschool_more_susp
+```
+Students who received one or more in-school suspension, by race/etchnicity, gender, disability status
+```{r}
+one_in_susp <- susp %>% 
+  select (1:8, 51:68, 105: 124 )
+one_in_susp[one_in_susp < 0] <- NA
+
+one_in_susp<- one_in_susp %>% 
+  drop_na()
+one_in_susp
+```
+
+Students who received one out-of-school suspension, by race/etchnicity, gender, disability status
+
+```{r}
+one_out_susp <- susp %>% 
+  select (1:8, 69:86, 125: 144 )
+one_out_susp[one_out_susp < 0] <- NA
+
+one_out_susp<- one_out_susp %>% 
+  drop_na()
+one_out_susp
+```
+
+Students who received more than one out-of-school suspension, by race/etchnicity, gender, disability status
+```{r}
+
+more_out_susp <- susp %>% 
+  select (1:8, 87:104, 145: 167 )
+more_out_susp[more_out_susp < 0] <- NA
+
+more_out_susp<- more_out_susp%>% 
+  drop_na()
+more_out_susp
+```
+School days missed by gender, race, and disability status
+
+```{r}
+days_missed <- susp %>% 
+  select (1:8, 168:189 )
+days_missed[days_missed < 0] <- NA
+
+days_missed <- days_missed %>% 
+  drop_na()
+days_missed
+```
+
