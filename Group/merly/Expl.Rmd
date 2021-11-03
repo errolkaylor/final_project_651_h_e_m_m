@@ -17,7 +17,7 @@ library(skimr)
 library(dplyr)
 ```
 
-Importing the data set
+Importing the dataset
 
 ```{r}
 expl <- read.csv(here("data", "Expulsions.csv")) %>% 
@@ -33,8 +33,6 @@ expl1[expl1 < 0] <- NA
 
 expl1 <- expl1 %>% 
   drop_na()
-expl1
-
 ```
 
 ## Explusion of preschool children, by race/ethnicity and gender, disability status
@@ -47,7 +45,6 @@ preschool_expl[preschool_expl < 0] <- NA
 
 preschool_expl <- preschool_expl %>% 
   drop_na()
-preschool_expl
 ```
 
 ## Expulsion of students with educational services, by race/ethnicity, gender, disability status
@@ -59,7 +56,6 @@ w_edu_expl[w_edu_expl <0] <- NA
 
 w_edu_expl <- w_edu_expl %>% 
   drop_na()
-colnames(w_edu_expl)
 ```
 
 ## Expulsion of students without educational services, by race/etchnicity, gender, disability status
@@ -70,7 +66,6 @@ wo_edu_expl <- expl %>%
 wo_edu_expl[wo_edu_expl <0] <- NA
 wo_edu_expl <- wo_edu_expl %>% 
   drop_na()
-colnames(wo_edu_expl)
 ```
 
 ## Expulsion of students under zero tolerance policy
@@ -81,6 +76,4 @@ zero_pol_expl <- expl %>%
 zero_pol_expl[zero_pol_expl <0] <- NA
 zero_pol_expl <- zero_pol_expl %>% 
   drop_na()
-colnames(zero_pol_expl)
-
 ```

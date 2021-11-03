@@ -39,13 +39,13 @@ susp1 <- susp1 %>%
 ## Preschool students suspension by race/ethnicity, gender, disability status
 * Only one out-of-school suspension
 ```{r}
-preschool_susp <- susp %>% 
-  select (1:8, 10:28, 49:50 )
-preschool_susp[preschool_susp < 0] <- NA
+preschool_one_susp <- susp %>% 
+  select (1:8, 9:28, 49:50 )
+preschool_one_susp[preschool_one_susp < 0] <- NA
 
-preschool_susp <- preschool_susp %>% 
+preschool_one_susp <- preschool_one_susp %>% 
   drop_na()
-preschool_susp
+preschool_one_susp
 ```
 * more than one out-of-school suspensions
 ```{r}
@@ -104,3 +104,28 @@ days_missed <- days_missed %>%
 days_missed
 ```
 
+
+* Preschool students one suspension by Race and Gender
+
+```{r}
+race_male <- preschool_one_susp %>% 
+ summarize(bl_m = sum(sch_psdisc_singoos_bl_m)/sum(tot_psdisc_singoos_m) * 100, 
+           hi_m = sum(sch_psdisc_singoos_hi_m)/sum(tot_psdisc_singoos_m)* 100,
+           am_m = sum(sch_psdisc_singoos_am_m)/sum(tot_psdisc_singoos_m)* 100,
+           as_m = sum(sch_psdisc_singoos_as_m)/sum(tot_psdisc_singoos_m)* 100,
+           hp_m = sum(sch_psdisc_singoos_hp_m)/sum(tot_psdisc_singoos_m)* 100,
+           wh_m = sum(sch_psdisc_singoos_wh_m)/sum(tot_psdisc_singoos_m)* 100,
+           tr_m = sum(sch_psdisc_singoos_tr_m)/sum(tot_psdisc_singoos_m)* 100) 
+race_female <- preschool_one_susp %>% 
+ summarize(bl_f = sum(sch_psdisc_singoos_bl_f)/sum(tot_psdisc_singoos_f) * 100, 
+           hi_f = sum(sch_psdisc_singoos_hi_f)/sum(tot_psdisc_singoos_f)* 100,
+           am_f = sum(sch_psdisc_singoos_am_f)/sum(tot_psdisc_singoos_f)* 100,
+           as_f = sum(sch_psdisc_singoos_as_f)/sum(tot_psdisc_singoos_f)* 100,
+           hp_f = sum(sch_psdisc_singoos_hp_f)/sum(tot_psdisc_singoos_f)* 100,
+           wh_f = sum(sch_psdisc_singoos_wh_f)/sum(tot_psdisc_singoos_f)* 100,
+           tr_f = sum(sch_psdisc_singoos_tr_f)/sum(tot_psdisc_singoos_f)* 100) %>% 
+  pivot_longer(cols = c(bl_f, hi_f, am_f, as_f, hp_f, wh_f,tr_f), names_to = "race", values_to = "count")
+         
+```
+
+* students 
