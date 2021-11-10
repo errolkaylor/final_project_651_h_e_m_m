@@ -2,11 +2,13 @@
 title: "Suspension"
 author: "Merly Klaas"
 date: "11/2/2021"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(rio)
 library(ggplot2)
@@ -26,7 +28,7 @@ susp <- read.csv(here("data", "Suspensions.csv")) %>%
 
 ```
 
-Dataset with no negative values across all variables. 
+Data set with no negative values across all variables. 
 
 ```{r}
 susp1 <- susp
@@ -38,7 +40,7 @@ susp1 <- susp1 %>%
 
 ## Preschool students suspension by race/ethnicity, gender, disability status
 * Only one out-of-school suspension
-```{r}
+```{r include=FALSE}
 preschool_one_susp <- susp %>% 
   select (1:8, 9:28, 49:50 )
 preschool_one_susp[preschool_one_susp < 0] <- NA
@@ -48,7 +50,7 @@ preschool_one_susp <- preschool_one_susp %>%
 preschool_one_susp
 ```
 * more than one out-of-school suspensions
-```{r}
+```{r include=FALSE}
 preschool_more_susp <- 
   preschool_more_susp <- susp %>% 
   select (1:8, 29:50 )
@@ -59,7 +61,7 @@ preschool_more_susp <- preschool_more_susp %>%
 preschool_more_susp
 ```
 Students who received one or more in-school suspension, by race/etchnicity, gender, disability status
-```{r}
+```{r include=FALSE}
 one_in_susp <- susp %>% 
   select (1:8, 51:68, 105: 124 )
 one_in_susp[one_in_susp < 0] <- NA
@@ -71,7 +73,7 @@ one_in_susp
 
 Students who received one out-of-school suspension, by race/etchnicity, gender, disability status
 
-```{r}
+```{r include=FALSE}
 one_out_susp <- susp %>% 
   select (1:8, 69:86, 125: 144 )
 one_out_susp[one_out_susp < 0] <- NA
@@ -82,7 +84,7 @@ one_out_susp
 ```
 
 Students who received more than one out-of-school suspension, by race/etchnicity, gender, disability status
-```{r}
+```{r include=FALSE}
 
 more_out_susp <- susp %>% 
   select (1:8, 87:104, 145: 167 )
@@ -94,7 +96,7 @@ more_out_susp
 ```
 School days missed by gender, race, and disability status
 
-```{r}
+```{r include=FALSE}
 days_missed <- susp %>% 
   select (1:8, 168:189 )
 days_missed[days_missed < 0] <- NA
@@ -180,7 +182,7 @@ pre_more_susp_race_f
 
 ## Students without disability with one or more in-school-suspensions by race and gender
 
-```{r}
+```{r include=FALSE}
 in_susp_wodis_race_m <- one_in_susp %>% 
   summarize(bl_m = sum(sch_discwodis_iss_bl_m)/sum(tot_discwodis_iss_m) * 100, 
            hi_m = sum(sch_discwodis_iss_hi_m)/sum(tot_discwodis_iss_m)* 100,
@@ -392,3 +394,38 @@ all_race_f <- left_join(pre_one_susp_race_f,pre_more_susp_race_f) %>%
   left_join(more_out_susp_wdis_race_f)
 ```
 
+Plot 
+
+```{r}
+all_race_male <- cbind(all_race_m[1], stack(all_race_m[2:7])) %>% 
+  select(race, ind, values) %>% 
+  mutate_at(vars(values), funs(round(., 1)))
+
+all_race_female <- cbind(all_race_f[1], stack(all_race_f[2:7])) %>% 
+  select(race, ind, values) %>% 
+  mutate_at(vars(values), funs(round(., 1)))
+
+```
+
+Plot for male
+
+```{r Plot-race-suspensions, echo=FALSE, fig.height=10, fig.width=10}
+all_race_male %>% 
+  ggplot(aes(fill= race, x=ind, y=values))+
+  geom_bar(position = "stack", stat= "identity", color = "black", width = 0.9)+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  geom_text(aes(label = paste0(values, "%")),
+            position = position_stack(vjust = 0.5), size = 5)
+
+```
+
+Plot for female
+```{r echo=FALSE, fig.height=8, fig.width=8}
+all_race_female %>% 
+  ggplot(aes(fill= race, x=ind, y=values))+
+  geom_bar(position = "stack", stat= "identity", color = "black", width = 0.9)+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  geom_text(aes(label = paste0(values, "%")),
+            position = position_stack(vjust = 0.5), size = 2)
+```
+  
