@@ -377,20 +377,18 @@ more_out_susp_wdis_race_f
 
 
 ```{r}
-all_race_m <- left_join(pre_one_susp_race_m,pre_more_susp_race_m) %>% 
+all_race_m <- left_join(pre_one_susp_race_m, pre_more_susp_race_m) %>% 
   left_join(in_susp_wdis_race_m) %>% 
   left_join(one_out_susp_wodis_race_m) %>% 
-  left_join(one_out_susp_wdis_race_m)
+  left_join(one_out_susp_wdis_race_m) %>% 
   left_join(more_out_susp_wodis_race_m) %>% 
   left_join(more_out_susp_wdis_race_m)
   
 all_race_f <- left_join(pre_one_susp_race_f,pre_more_susp_race_f) %>% 
   left_join(in_susp_wdis_race_f) %>% 
   left_join(one_out_susp_wodis_race_f) %>% 
-  left_join(one_out_susp_wdis_race_f)
+  left_join(one_out_susp_wdis_race_f) %>% 
   left_join(more_out_susp_wodis_race_f) %>% 
   left_join(more_out_susp_wdis_race_f)
 ```
 
-
-```{r}

@@ -798,6 +798,33 @@ more_out_susp_wdis_race_f</code></pre>
 ## 5 hp_f                      0.231
 ## 6 wh_f                     28.9  
 ## 7 tr_f                      4.84</code></pre>
+<div id="combining-all-percentage-dataset-based-on-gender" class="section level2">
+<h2>Combining all percentage dataset based on gender</h2>
+<pre class="r"><code>all_race_m &lt;- left_join(pre_one_susp_race_m, pre_more_susp_race_m) %&gt;% 
+  left_join(in_susp_wdis_race_m) %&gt;% 
+  left_join(one_out_susp_wodis_race_m) %&gt;% 
+  left_join(one_out_susp_wdis_race_m) %&gt;% 
+  left_join(more_out_susp_wodis_race_m) %&gt;% 
+  left_join(more_out_susp_wdis_race_m)</code></pre>
+<pre><code>## Joining, by = &quot;race&quot;
+## Joining, by = &quot;race&quot;
+## Joining, by = &quot;race&quot;
+## Joining, by = &quot;race&quot;
+## Joining, by = &quot;race&quot;
+## Joining, by = &quot;race&quot;</code></pre>
+<pre class="r"><code>all_race_f &lt;- left_join(pre_one_susp_race_f,pre_more_susp_race_f) %&gt;% 
+  left_join(in_susp_wdis_race_f) %&gt;% 
+  left_join(one_out_susp_wodis_race_f) %&gt;% 
+  left_join(one_out_susp_wdis_race_f) %&gt;% 
+  left_join(more_out_susp_wodis_race_f) %&gt;% 
+  left_join(more_out_susp_wdis_race_f)</code></pre>
+<pre><code>## Joining, by = &quot;race&quot;
+## Joining, by = &quot;race&quot;
+## Joining, by = &quot;race&quot;
+## Joining, by = &quot;race&quot;
+## Joining, by = &quot;race&quot;
+## Joining, by = &quot;race&quot;</code></pre>
+</div>
 </div>
 
 
