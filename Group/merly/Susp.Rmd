@@ -105,18 +105,30 @@ days_missed
 ```
 
 
-* Preschool students one suspension by Race and Gender
+# Preschool students one suspension by Race and Gender
+  ### Preschool Male Students 
 
 ```{r}
-race_male <- preschool_one_susp %>% 
+pre_one_susp_race_m <- preschool_one_susp %>% 
  summarize(bl_m = sum(sch_psdisc_singoos_bl_m)/sum(tot_psdisc_singoos_m) * 100, 
            hi_m = sum(sch_psdisc_singoos_hi_m)/sum(tot_psdisc_singoos_m)* 100,
            am_m = sum(sch_psdisc_singoos_am_m)/sum(tot_psdisc_singoos_m)* 100,
            as_m = sum(sch_psdisc_singoos_as_m)/sum(tot_psdisc_singoos_m)* 100,
            hp_m = sum(sch_psdisc_singoos_hp_m)/sum(tot_psdisc_singoos_m)* 100,
            wh_m = sum(sch_psdisc_singoos_wh_m)/sum(tot_psdisc_singoos_m)* 100,
-           tr_m = sum(sch_psdisc_singoos_tr_m)/sum(tot_psdisc_singoos_m)* 100) 
-race_female <- preschool_one_susp %>% 
+           tr_m = sum(sch_psdisc_singoos_tr_m)/sum(tot_psdisc_singoos_m)* 100)  %>% 
+  pivot_longer(cols = 
+                 c(bl_m, hi_m, am_m, as_m, hp_m, wh_m,tr_m),
+               names_to = "race", 
+               values_to = "pre_one_susp_race_m")
+pre_one_susp_race_m 
+
+```
+  
+ ### Preschool one suspension Female students
+
+```{r}
+pre_one_susp_race_f  <- preschool_one_susp %>% 
  summarize(bl_f = sum(sch_psdisc_singoos_bl_f)/sum(tot_psdisc_singoos_f) * 100, 
            hi_f = sum(sch_psdisc_singoos_hi_f)/sum(tot_psdisc_singoos_f)* 100,
            am_f = sum(sch_psdisc_singoos_am_f)/sum(tot_psdisc_singoos_f)* 100,
@@ -124,8 +136,261 @@ race_female <- preschool_one_susp %>%
            hp_f = sum(sch_psdisc_singoos_hp_f)/sum(tot_psdisc_singoos_f)* 100,
            wh_f = sum(sch_psdisc_singoos_wh_f)/sum(tot_psdisc_singoos_f)* 100,
            tr_f = sum(sch_psdisc_singoos_tr_f)/sum(tot_psdisc_singoos_f)* 100) %>% 
-  pivot_longer(cols = c(bl_f, hi_f, am_f, as_f, hp_f, wh_f,tr_f), names_to = "race", values_to = "count")
-         
+  pivot_longer(cols = c(bl_f, hi_f, am_f, as_f, hp_f, wh_f,tr_f),
+               names_to = "race",
+               values_to = "pre_one_susp_race_f")
+pre_one_susp_race_f
+
 ```
 
-* students 
+# Preschool Students with more than one suspension by race and gender
+
+```{r}
+pre_more_susp_race_m <- preschool_more_susp %>% 
+  summarize(bl_m = sum(sch_psdisc_multoos_bl_m)/sum(tot_psdisc_multoos_m) * 100, 
+           hi_m = sum(sch_psdisc_multoos_hi_m)/sum(tot_psdisc_multoos_m)* 100,
+           am_m = sum(sch_psdisc_multoos_am_m)/sum(tot_psdisc_multoos_m)* 100,
+           as_m = sum(sch_psdisc_multoos_as_m)/sum(tot_psdisc_multoos_m)* 100,
+           hp_m = sum(sch_psdisc_multoos_hp_m)/sum(tot_psdisc_multoos_m)* 100,
+           wh_m = sum(sch_psdisc_multoos_wh_m)/sum(tot_psdisc_multoos_m)* 100,
+           tr_m = sum(sch_psdisc_multoos_tr_m)/sum(tot_psdisc_multoos_m)* 100) %>% 
+  pivot_longer(cols = 
+                 c(bl_m, hi_m, am_m, as_m, hp_m, wh_m,tr_m),
+               names_to = "race", 
+               values_to = "pre_more_susp_race_m")
+pre_more_susp_race_m 
+
+```
+
+```{r}
+pre_more_susp_race_f  <- preschool_more_susp%>% 
+ summarize(bl_f = sum(sch_psdisc_multoos_bl_f)/sum(tot_psdisc_multoos_f) * 100, 
+           hi_f = sum(sch_psdisc_multoos_hi_f)/sum(tot_psdisc_multoos_f)* 100,
+           am_f = sum(sch_psdisc_multoos_am_f)/sum(tot_psdisc_multoos_f)* 100,
+           as_f = sum(sch_psdisc_multoos_as_f)/sum(tot_psdisc_multoos_f)* 100,
+           hp_f = sum(sch_psdisc_multoos_hp_f)/sum(tot_psdisc_multoos_f)* 100,
+           wh_f = sum(sch_psdisc_multoos_wh_f)/sum(tot_psdisc_multoos_f)* 100,
+           tr_f = sum(sch_psdisc_multoos_tr_f)/sum(tot_psdisc_multoos_f)* 100)  %>% 
+  pivot_longer(cols = c(bl_f, hi_f, am_f, as_f, hp_f, wh_f,tr_f),
+               names_to = "race",
+               values_to = "pre_more_susp_race_f")
+pre_more_susp_race_f
+```
+
+
+## Students without disability with one or more in-school-suspensions by race and gender
+
+```{r}
+in_susp_wodis_race_m <- one_in_susp %>% 
+  summarize(bl_m = sum(sch_discwodis_iss_bl_m)/sum(tot_discwodis_iss_m) * 100, 
+           hi_m = sum(sch_discwodis_iss_hi_m)/sum(tot_discwodis_iss_m)* 100,
+           am_m = sum(sch_discwodis_iss_am_m)/sum(tot_discwodis_iss_m)* 100,
+           as_m = sum(sch_discwodis_iss_as_m)/sum(tot_discwodis_iss_m)* 100,
+           hp_m = sum(sch_discwodis_iss_hp_m)/sum(tot_discwodis_iss_m)* 100,
+           wh_m = sum(sch_discwodis_iss_wh_m)/sum(tot_discwodis_iss_m)* 100,
+           tr_m = sum(sch_discwodis_iss_tr_m)/sum(tot_discwodis_iss_m)* 100) %>% 
+  pivot_longer(cols = 
+                 c(bl_m, hi_m, am_m, as_m, hp_m, wh_m,tr_m),
+               names_to = "race", 
+               values_to = "in_susp_wodis_race_m")
+in_susp_wodis_race_m 
+
+
+in_susp_wodis_race_f <- one_in_susp %>%   
+summarize(bl_f = sum(sch_discwodis_iss_bl_f)/sum(tot_discwodis_iss_f) * 100, 
+           hi_f = sum(sch_discwodis_iss_hi_f)/sum(tot_discwodis_iss_f)* 100,
+           am_f = sum(sch_discwodis_iss_am_f)/sum(tot_discwodis_iss_f)* 100,
+           as_f = sum(sch_discwodis_iss_as_f)/sum(tot_discwodis_iss_f)* 100,
+           hp_f = sum(sch_discwodis_iss_hp_f)/sum(tot_discwodis_iss_f)* 100,
+           wh_f = sum(sch_discwodis_iss_wh_f)/sum(tot_discwodis_iss_f)* 100,
+           tr_f = sum(sch_discwodis_iss_tr_f)/sum(tot_discwodis_iss_f)* 100) %>% 
+  pivot_longer(cols = c(bl_f, hi_f, am_f, as_f, hp_f, wh_f,tr_f),
+               names_to = "race",
+               values_to = "in_susp_wodis_race_f")
+  
+in_susp_wodis_race_f
+```
+
+## Students with disability with one or more in-school-suspensions by race and gender
+```{r}
+
+in_susp_wdis_race_m <- one_in_susp %>%   
+  summarize(bl_m = sum(sch_discwdis_iss_idea_bl_m)/sum(tot_discwdis_iss_idea_m) * 100, 
+           hi_m = sum(sch_discwdis_iss_idea_hi_m)/sum(tot_discwdis_iss_idea_m)* 100,
+           am_m = sum(sch_discwdis_iss_idea_am_m)/sum(tot_discwdis_iss_idea_m)* 100,
+           as_m = sum(sch_discwdis_iss_idea_as_m)/sum(tot_discwdis_iss_idea_m)* 100,
+           hp_m = sum(sch_discwdis_iss_idea_hp_m)/sum(tot_discwdis_iss_idea_m)* 100,
+           wh_m = sum(sch_discwdis_iss_idea_wh_m)/sum(tot_discwdis_iss_idea_m)* 100,
+           tr_m = sum(sch_discwdis_iss_idea_tr_m)/sum(tot_discwdis_iss_idea_m)* 100)%>% 
+  pivot_longer(cols = 
+                 c(bl_m, hi_m, am_m, as_m, hp_m, wh_m,tr_m),
+               names_to = "race", 
+               values_to = "in_susp_wdis_race_m")
+in_susp_wdis_race_m
+
+in_susp_wdis_race_f <- one_in_susp %>%   
+  summarize(bl_f = sum(sch_discwdis_iss_idea_bl_f)/sum(tot_discwdis_iss_idea_f) * 100, 
+           hi_f = sum(sch_discwdis_iss_idea_hi_f)/sum(tot_discwdis_iss_idea_f)* 100,
+           am_f = sum(sch_discwdis_iss_idea_am_f)/sum(tot_discwdis_iss_idea_f)* 100,
+           as_f = sum(sch_discwdis_iss_idea_as_f)/sum(tot_discwdis_iss_idea_f)* 100,
+           hp_f = sum(sch_discwdis_iss_idea_hp_f)/sum(tot_discwdis_iss_idea_f)* 100,
+           wh_f = sum(sch_discwdis_iss_idea_wh_f)/sum(tot_discwdis_iss_idea_f)* 100,
+           tr_f = sum(sch_discwdis_iss_idea_tr_f)/sum(tot_discwdis_iss_idea_f)* 100) %>% 
+  pivot_longer(cols = c(bl_f, hi_f, am_f, as_f, hp_f, wh_f,tr_f),
+               names_to = "race",
+               values_to = "in_susp_wdis_race_f")
+in_susp_wdis_race_f
+
+```
+
+# Students without disability with only one out-of-school-suspensions by race and gender
+
+```{r}
+
+one_out_susp_wodis_race_m <- one_out_susp %>% 
+  summarize(bl_m = sum(sch_discwodis_singoos_bl_m)/sum(tot_discwodis_singoos_m) * 100, 
+           hi_m = sum(sch_discwodis_singoos_hi_m)/sum(tot_discwodis_singoos_m)* 100,
+           am_m = sum(sch_discwodis_singoos_am_m)/sum(tot_discwodis_singoos_m)* 100,
+           as_m = sum(sch_discwodis_singoos_as_m)/sum(tot_discwodis_singoos_m)* 100,
+           hp_m = sum(sch_discwodis_singoos_hp_m)/sum(tot_discwodis_singoos_m)* 100,
+           wh_m = sum(sch_discwodis_singoos_wh_m)/sum(tot_discwodis_singoos_m)* 100,
+           tr_m = sum(sch_discwodis_singoos_tr_m)/sum(tot_discwodis_singoos_m)* 100) %>% 
+  pivot_longer(cols = 
+                 c(bl_m, hi_m, am_m, as_m, hp_m, wh_m,tr_m),
+               names_to = "race", 
+               values_to = "one_out_susp_wodis_race_m")
+one_out_susp_wodis_race_m 
+
+one_out_susp_wodis_race_f <- one_out_susp %>% 
+  summarize(bl_f = sum(sch_discwodis_singoos_bl_f)/sum(tot_discwodis_singoos_f) * 100, 
+           hi_f = sum(sch_discwodis_singoos_hi_f)/sum(tot_discwodis_singoos_f)* 100,
+           am_f = sum(sch_discwodis_singoos_am_f)/sum(tot_discwodis_singoos_f)* 100,
+           as_f = sum(sch_discwodis_singoos_as_f)/sum(tot_discwodis_singoos_f)* 100,
+           hp_f = sum(sch_discwodis_singoos_hp_f)/sum(tot_discwodis_singoos_f)* 100,
+           wh_f = sum(sch_discwodis_singoos_wh_f)/sum(tot_discwodis_singoos_f)* 100,
+           tr_f = sum(sch_discwodis_singoos_tr_f)/sum(tot_discwodis_singoos_f)* 100) %>% 
+  pivot_longer(cols = c(bl_f, hi_f, am_f, as_f, hp_f, wh_f,tr_f),
+               names_to = "race",
+               values_to = "one_out_susp_wodis_race_f")
+one_out_susp_wodis_race_f
+
+```
+
+# Students with disability with one out-of-school-suspensions by race and gender
+
+```{r}
+
+one_out_susp_wdis_race_m <- one_out_susp %>% 
+  summarize(bl_m = sum(sch_discwdis_singoos_idea_bl_m)/sum(tot_discwdis_singoos_idea_m) * 100, 
+           hi_m = sum(sch_discwdis_singoos_idea_hi_m)/sum(tot_discwdis_singoos_idea_m)* 100,
+           am_m = sum(sch_discwdis_singoos_idea_am_m)/sum(tot_discwdis_singoos_idea_m)* 100,
+           as_m = sum(sch_discwdis_singoos_idea_as_m)/sum(tot_discwdis_singoos_idea_m)* 100,
+           hp_m = sum(sch_discwdis_singoos_idea_hp_m)/sum(tot_discwdis_singoos_idea_m)* 100,
+           wh_m = sum(sch_discwdis_singoos_idea_wh_m)/sum(tot_discwdis_singoos_idea_m)* 100,
+           tr_m = sum(sch_discwdis_singoos_idea_tr_m)/sum(tot_discwdis_singoos_idea_m)* 100) %>% 
+  pivot_longer(cols = 
+                 c(bl_m, hi_m, am_m, as_m, hp_m, wh_m,tr_m),
+               names_to = "race", 
+               values_to = "one_out_susp_wdis_race_m")
+one_out_susp_wdis_race_m 
+
+one_out_susp_wdis_race_f <- one_out_susp %>% 
+  summarize(bl_f = sum(sch_discwdis_singoos_idea_bl_f)/sum(tot_discwdis_singoos_idea_f) * 100, 
+           hi_f = sum(sch_discwdis_singoos_idea_hi_f)/sum(tot_discwdis_singoos_idea_f)* 100,
+           am_f = sum(sch_discwdis_singoos_idea_am_f)/sum(tot_discwdis_singoos_idea_f)* 100,
+           as_f = sum(sch_discwdis_singoos_idea_as_f)/sum(tot_discwdis_singoos_idea_f)* 100,
+           hp_f = sum(sch_discwdis_singoos_idea_hp_f)/sum(tot_discwdis_singoos_idea_f)* 100,
+           wh_f = sum(sch_discwdis_singoos_idea_wh_f)/sum(tot_discwdis_singoos_idea_f)* 100,
+           tr_f = sum(sch_discwdis_singoos_idea_tr_f)/sum(tot_discwdis_singoos_idea_f)* 100) %>% 
+  pivot_longer(cols = c(bl_f, hi_f, am_f, as_f, hp_f, wh_f,tr_f),
+               names_to = "race",
+               values_to = "one_out_susp_wdis_race_f")
+one_out_susp_wdis_race_f
+```
+
+# Student without disability with more than one out-of-school-suspensions by race and gender
+
+```{r}
+more_out_susp_wodis_race_m <- more_out_susp %>% 
+  summarize(bl_m = sum(sch_discwodis_multoos_bl_m)/sum(tot_discwodis_multoos_m) * 100, 
+           hi_m = sum(sch_discwodis_multoos_hi_m)/sum(tot_discwodis_multoos_m)* 100,
+           am_m = sum(sch_discwodis_multoos_am_m)/sum(tot_discwodis_multoos_m)* 100,
+           as_m = sum(sch_discwodis_multoos_as_m)/sum(tot_discwodis_multoos_m)* 100,
+           hp_m = sum(sch_discwodis_multoos_hp_m)/sum(tot_discwodis_multoos_m)* 100,
+           wh_m = sum(sch_discwodis_multoos_wh_m)/sum(tot_discwodis_multoos_m)* 100,
+           tr_m = sum(sch_discwodis_multoos_tr_m)/sum(tot_discwodis_multoos_m)* 100) %>% 
+  pivot_longer(cols = 
+                 c(bl_m, hi_m, am_m, as_m, hp_m, wh_m,tr_m),
+               names_to = "race", 
+               values_to = "more_out_susp_wodis_race_m")
+more_out_susp_wodis_race_m 
+
+more_out_susp_wodis_race_f <- more_out_susp %>% 
+  summarize(bl_f = sum(sch_discwodis_multoos_bl_f)/sum(tot_discwodis_multoos_f) * 100, 
+           hi_f = sum(sch_discwodis_multoos_hi_f)/sum(tot_discwodis_multoos_f)* 100,
+           am_f = sum(sch_discwodis_multoos_am_f)/sum(tot_discwodis_multoos_f)* 100,
+           as_f = sum(sch_discwodis_multoos_as_f)/sum(tot_discwodis_multoos_f)* 100,
+           hp_f = sum(sch_discwodis_multoos_hp_f)/sum(tot_discwodis_multoos_f)* 100,
+           wh_f = sum(sch_discwodis_multoos_wh_f)/sum(tot_discwodis_multoos_f)* 100,
+           tr_f = sum(sch_discwodis_multoos_tr_f)/sum(tot_discwodis_multoos_f)* 100)  %>% 
+  pivot_longer(cols = c(bl_f, hi_f, am_f, as_f, hp_f, wh_f,tr_f),
+               names_to = "race",
+               values_to = "more_out_susp_wodis_race_f")
+more_out_susp_wodis_race_f
+
+```
+
+Student with disability with more than one out-of-school-suspensions by race and gender
+
+```{r}
+more_out_susp_wdis_race_m <- more_out_susp %>% 
+  summarize(bl_m = sum(sch_discwdis_multoos_idea_bl_m)/sum(tot_discwdis_multoos_idea_m) * 100, 
+           hi_m = sum(sch_discwdis_multoos_idea_hi_m)/sum(tot_discwdis_multoos_idea_m)* 100,
+           am_m = sum(sch_discwdis_multoos_idea_am_m)/sum(tot_discwdis_multoos_idea_m)* 100,
+           as_m = sum(sch_discwdis_multoos_idea_as_m)/sum(tot_discwdis_multoos_idea_m)* 100,
+           hp_m = sum(sch_discwdis_multoos_idea_hp_m)/sum(tot_discwdis_multoos_idea_m)* 100,
+           wh_m = sum(sch_discwdis_multoos_idea_wh_m)/sum(tot_discwdis_multoos_idea_m)* 100,
+           tr_m = sum(sch_discwdis_multoos_idea_tr_m)/sum(tot_discwdis_multoos_idea_m)* 100)  %>% 
+  pivot_longer(cols = 
+                 c(bl_m, hi_m, am_m, as_m, hp_m, wh_m,tr_m),
+               names_to = "race", 
+               values_to = "more_out_susp_wdis_race_m")
+more_out_susp_wdis_race_m 
+
+more_out_susp_wdis_race_f <- more_out_susp %>% 
+  summarize(bl_f = sum(sch_discwdis_multoos_idea_bl_f)/sum(tot_discwdis_multoos_idea_f) * 100, 
+           hi_f = sum(sch_discwdis_multoos_idea_hi_f)/sum(tot_discwdis_multoos_idea_f)* 100,
+           am_f = sum(sch_discwdis_multoos_idea_am_f)/sum(tot_discwdis_multoos_idea_f)* 100,
+           as_f = sum(sch_discwdis_multoos_idea_as_f)/sum(tot_discwdis_multoos_idea_f)* 100,
+           hp_f = sum(sch_discwdis_multoos_idea_hp_f)/sum(tot_discwdis_multoos_idea_f)* 100,
+           wh_f = sum(sch_discwdis_multoos_idea_wh_f)/sum(tot_discwdis_multoos_idea_f)* 100,
+           tr_f = sum(sch_discwdis_multoos_idea_tr_f)/sum(tot_discwdis_multoos_idea_f)* 100)%>% 
+  pivot_longer(cols = c(bl_f, hi_f, am_f, as_f, hp_f, wh_f,tr_f),
+               names_to = "race",
+               values_to = "more_out_susp_wdis_race_f")
+more_out_susp_wdis_race_f
+
+```
+
+
+## Combining all percentage dataset based on gender
+
+
+```{r}
+all_race_m <- left_join(pre_one_susp_race_m,pre_more_susp_race_m) %>% 
+  left_join(in_susp_wdis_race_m) %>% 
+  left_join(one_out_susp_wodis_race_m) %>% 
+  left_join(one_out_susp_wdis_race_m)
+  left_join(more_out_susp_wodis_race_m) %>% 
+  left_join(more_out_susp_wdis_race_m)
+  
+all_race_f <- left_join(pre_one_susp_race_f,pre_more_susp_race_f) %>% 
+  left_join(in_susp_wdis_race_f) %>% 
+  left_join(one_out_susp_wodis_race_f) %>% 
+  left_join(one_out_susp_wdis_race_f)
+  left_join(more_out_susp_wodis_race_f) %>% 
+  left_join(more_out_susp_wdis_race_f)
+```
+
+
+```{r}
